@@ -1,3 +1,6 @@
+# Analytics Rules build and deploy pipeline
+# This pipeline publishes the rules file as an artifact and then uses a powershell task to deploy
+
 name: build and deploy Alert Rules
 resources:
  pipelines:
@@ -45,8 +48,9 @@ stages:
       - task: AzurePowerShell@4
         displayName: 'Create and Update Alert Rules'
         inputs:
-         azureSubscription: 'Visual Studio Enterprise Subscription – MPN'
+         azureSubscription: 'Soricloud Visual Studio'
          ScriptPath: '$(Pipeline.Workspace)/Scripts/Scripts/CreateAnalyticsRulesAPI.ps1'
          ScriptArguments: '-TenantId $(TenantId) -ClientId $(ClientId) -ClientSecret $(ClientSecret) -SubscriptionId $(SubscriptionId) -ResourceGroup $(ResourceGroup) -Workspace $(Workspace) -RulesFile analytics-rules.json'
          azurePowerShellVersion: LatestVersion
          pwsh: true
+
